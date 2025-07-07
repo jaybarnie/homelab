@@ -28,6 +28,19 @@ git check-ignore terraform-credentials.env
 # Should output: terraform-credentials.env
 ```
 
+### SSH Key Verification for GitHub:
+```powershell
+# If you get "authenticity of host" warning, verify GitHub's fingerprint:
+# GitHub's ED25519 key fingerprint should be:
+# SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+
+# To accept GitHub's host key automatically:
+ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
+
+# Or verify and accept manually when prompted:
+# Type "yes" when you see the correct fingerprint above
+```
+
 ## 📁 Repository Setup
 
 ### Repository Settings:
@@ -45,7 +58,7 @@ git check-ignore terraform-credentials.env
 - [ ] Module files in `modules/` directory
 - [ ] Scripts in `scripts/` directory
 
-## 🚀 Push Process
+##  Push Process
 
 ### Before First Push:
 - [ ] Complete security verification above
@@ -56,14 +69,14 @@ git check-ignore terraform-credentials.env
 ### Push Commands:
 ```powershell
 # Option 1: Use automated script
-.\scripts\push-to-github.ps1 -GitHubUsername "your-username"
+.\scripts\quick-push.ps1
 
 # Option 2: Manual process
 git init
 git add .
-git commit -m "Initial commit: AKS infrastructure"
+git commit -m "feat: add AKS infrastructure to homelab"
 git branch -M main
-git remote add origin https://github.com/your-username/hadandhed-aks-infrastructure.git
+git remote add origin git@github.com:jaybarnie/homelab.git
 git push -u origin main
 ```
 
