@@ -1,0 +1,57 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.80"
+    }
+  }
+  
+  backend "azurerm" {
+    # DevOps Backend: hnddevopsstorage01 (from naming scheme: hnd_devops-storage01)
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
+# Test resource group with DevOps naming conventions
+resource "azurerm_resource_group" "devops_test" {
+  name     = "hnd-devops-aks-connectivity-test-rg"
+  location = "UK South"
+  
+  tags = {
+    Environment      = "test"
+    Project          = "AKS-Setup"
+    Owner            = "DevOps-Team"
+    Company          = "Hadandhed"
+    Purpose          = "Connectivity-Test"
+    NamingConvention = "hnd_devops_standard"
+    StorageBackend   = "hnddevopsstorage01"
+    Team             = "DevOps"
+  }
+}
+
+output "devops_test_rg_name" {
+  description = "DevOps test resource group name"
+  value       = azurerm_resource_group.devops_test.name
+}
+
+output "devops_storage_info" {
+  description = "DevOps storage backend information"
+  value = {
+    storage_account = "hnddevopsstorage01"
+    naming_scheme   = "hnd_devops-storage01"
+    team           = "DevOps"
+    location       = "UK South"
+  }
+}
+
+output "devops_naming_pattern" {
+  description = "DevOps naming pattern verification"
+  value = {
+    resource_group = azurerm_resource_group.devops_test.name
+    follows_pattern = "hnd-devops-*"
+    storage_follows = "hnd_devops-storage01 -> hnddevopsstorage01"
+  }
+}
