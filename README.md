@@ -1,4 +1,4 @@
-# 🚀 HadAndHez AKS Infrastructure
+#  HadAndHez AKS Infrastructure
 
 > Production-ready Azure Kubernetes Service (AKS) infrastructure using Terraform with enterprise-grade security and monitoring.
 
